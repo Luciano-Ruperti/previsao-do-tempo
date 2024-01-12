@@ -33,5 +33,6 @@ async function consultApi(city) {
 function btnClicked() {
   const city = document.querySelector(".input-city").value;
   document.querySelector(".input-city").value = "";
+  document.querySelector(".input-city").focus();
   consultApi(city);
 }
