@@ -2,15 +2,25 @@ const key = "2c05fd6a358523a5f5c753bc81ec4718";
 
 function dataOnScreen(data) {
   console.log(data);
-  document.querySelector(".city").innerHTML = "Tempo em " + data.name;
-  document.querySelector(".temp").innerHTML = Math.floor(data.main.temp) + "°C";
-  document.querySelector(".txt-forecast").innerHTML =
-    data.weather[0].description;
-  document.querySelector(".humidity").innerHTML =
-    "Umidade: " + data.main.humidity + "%";
-  document.querySelector(
-    ".img-forecast"
-  ).src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+  if (data.name === undefined) {
+    document.querySelector(".city").innerHTML = "Cidade não encontrada";
+    document.querySelector(".temp").innerHTML = "";
+    document.querySelector(".txt-forecast").innerHTML = "";
+    document.querySelector(".humidity").innerHTML = "";
+    document.querySelector(".img-forecast").style.display = "none";
+  } else {
+    document.querySelector(".city").innerHTML = "Tempo em " + data.name;
+    document.querySelector(".temp").innerHTML =
+      Math.floor(data.main.temp) + "°C";
+    document.querySelector(".txt-forecast").innerHTML =
+      data.weather[0].description;
+    document.querySelector(".humidity").innerHTML =
+      "Umidade: " + data.main.humidity + "%";
+    document.querySelector(".img-forecast").style.display = "block";
+    document.querySelector(
+      ".img-forecast"
+    ).src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+  }
 }
 
 async function consultApi(city) {
@@ -22,5 +32,6 @@ async function consultApi(city) {
 
 function btnClicked() {
   const city = document.querySelector(".input-city").value;
+  document.querySelector(".input-city").value = "";
   consultApi(city);
 }
